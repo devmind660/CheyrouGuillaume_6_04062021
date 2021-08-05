@@ -91,16 +91,17 @@ exports.createSauce = (req, res) => {
         ...sauceObject,
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     });
-    Sauce.updateOne({ _id: req.params.id }, { ...sauce, _id: req.params.id })
+    sauce.save()
         .then(() => {
-            res.status(200).json({
-                message: 'Sauce modifiée !'
+            res.status(201).json({
+                message: 'Avis enregistré !'
             })
         })
         .catch((error) => {
             res.status(400).json({
                 error: error
             })
+            console.log(error);
         });
 };
 
