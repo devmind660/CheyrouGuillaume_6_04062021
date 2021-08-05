@@ -7,9 +7,6 @@ exports.likeSauce = (req, res) => {
     })
         // On récupère la sauce à modifier : sauce
         .then((sauce) => {
-            res.status(200).json(sauce);
-
-            console.log(req.params);
 
             // On créé le tableau des userLiked
             let userLikedIds = sauce.userLiked.split(',');
@@ -20,7 +17,6 @@ exports.likeSauce = (req, res) => {
             // On récupère l'id de l'user et son vote like
             const userId = req.body.userId
             let like = req.body.like;
-            console.log('like: ' + like);
 
             // On vérifie si l'user est dans les tableaux userLiked et userDisliked
             let findUserLike = userLikedIds.indexOf(userId);
@@ -40,6 +36,7 @@ exports.likeSauce = (req, res) => {
                 userDislikedIds.splice(findUserDislike);
                 console.log('reset')
             }
+
             if (findUserDislike === -1 && like === -1) {
                 userLikedIds.splice(findUserLike);
                 userDislikedIds.push(userId);
@@ -55,10 +52,16 @@ exports.likeSauce = (req, res) => {
             sauce.dislikes = userDislikedIds.length -1;
 
             // On met à jour la liste des likes
-            sauce.userLiked = userLikedIds.join(',');
+            sauce.userLiked = userLikedIds.join();
+            if (sauce.userLiked === '') {
+                sauce.userLiked = 0
+            }
 
             // On met à jour la liste des dislikes
-            sauce.userDisliked = userDislikedIds.join(',');
+            sauce.userDisliked = userDislikedIds.join();
+            if (sauce.userDisliked === '') {
+                sauce.userDisliked = 0
+            }
 
             // On enregistre la sauce
             sauce.save()
@@ -71,6 +74,7 @@ exports.likeSauce = (req, res) => {
                     res.status(400).json({
                         error: error
                     })
+                    console.log(error);
                 });
         })
         .catch((error) => {
@@ -87,10 +91,10 @@ exports.createSauce = (req, res) => {
         ...sauceObject,
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     });
-    sauce.save()
+    Sauce.updateOne({ _id: req.params.id }, { ...sauce, _id: req.params.id })
         .then(() => {
-            res.status(201).json({
-                message: 'Sauce enregistrée !'
+            res.status(200).json({
+                message: 'Sauce modifiée !'
             })
         })
         .catch((error) => {
