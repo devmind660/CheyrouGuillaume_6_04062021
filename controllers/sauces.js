@@ -46,10 +46,16 @@ exports.likeSauce = (req, res) => {
             }
 
             // On met à jour le score like
-            sauce.likes = userLikedIds.length -1;
+            if (userLikedIds[0] === '0') {
+                userLikedIds.shift();
+            }
+            sauce.likes = userLikedIds.length;
 
             // On met à jour le score dislike
-            sauce.dislikes = userDislikedIds.length -1;
+            if (userDislikedIds[0] === '0') {
+                userDislikedIds.shift();
+            }
+            sauce.dislikes = userDislikedIds.length;
 
             // On met à jour la liste des likes
             sauce.userLiked = userLikedIds.join();
@@ -110,7 +116,7 @@ exports.getOneSauce = (req, res) => {
         _id: req.params.id
     })
         .then((sauce) => {
-        res.status(200).json(sauce);
+            res.status(200).json(sauce);
         })
         .catch((error) => {
             res.status(404).json({
