@@ -94,7 +94,7 @@ exports.createSauce = (req, res) => {
     sauce.save()
         .then(() => {
             res.status(201).json({
-                message: 'Avis enregistré !'
+                message: 'Sauce enregistrée !'
             })
         })
         .catch((error) => {
