@@ -1,4 +1,12 @@
 const http = require('http');
+
+dotenv = require('dotenv').config();
+
+// Variables d\'environnement Dotenv
+const hostnamedotenv = process.env.HOST;
+const portdotenv = process.env.PORT;
+const keydotenv = process.env.KEY;
+
 const app = require('./app');
 
 const normalizePort = val => {
@@ -42,6 +50,7 @@ server.on('listening', () => {
     const address = server.address();
     const bind = typeof address === 'string' ? 'pipe ' + address : 'port ' + port;
     console.log('Listening on ' + bind);
+    console.log('Dotenv config: ' + 'HOST:' + hostnamedotenv, 'PORT:' + portdotenv, 'KEY:' + keydotenv);
 });
 
 server.listen(port);

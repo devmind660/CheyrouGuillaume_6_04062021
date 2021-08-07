@@ -1,5 +1,5 @@
 const Sauce = require('../models/Sauce');
-const fs = require('fs');
+const fs = require('fs'); // file system, gestion Node des fichiers
 
 exports.likeSauce = (req, res) => {
     Sauce.findOne({
