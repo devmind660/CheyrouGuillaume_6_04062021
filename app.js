@@ -10,8 +10,8 @@ const saucesRoutes = require('./routes/sauces');
 const userRoutes = require('./routes/user');
 
 // Mise en place de la base de donnée
-mongoose.connect('mongodb+srv://Guillaume660:kx3nYtmax3nY@cluster0.awx0s.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
-    { useNewUrlParser: true,
+mongoose.connect('mongodb+srv://Guillaume660:kx3nYtmax3nY@cluster0.awx0s.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {
+        useNewUrlParser: true,
         useUnifiedTopology: true })
     .then(() => console.log('Connexion à MongoDB réussie !'))
     .catch(() => console.log('Connexion à MongoDB échouée !'));
